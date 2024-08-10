@@ -7,11 +7,40 @@ import { defineConfig, devices } from '@playwright/test';
 // import dotenv from 'dotenv';
 // dotenv.config({ path: path.resolve(__dirname, '.env') });
 
+if (!process.env.NODE_ENV) {
+  require("dotenv").config({ path: `${__dirname}//src//config//.env` });
+} else {
+  require("dotenv").config({
+    path: `${__dirname}//src//config//.env.${process.env.NODE_ENV}`,
+  });
+}
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: './tests',
+
+  use: {
+    launchOptions: {
+      // 1
+      args: ["--start-maximized"],
+    },
+  },
+
+  projects: [
+    {
+      name: "chromium",
+      use: {
+        // 2 (Make sure device is not set)
+        // ...devices["Desktop Chrome"],
+
+        // 3
+        viewport: null,
+      },
+    },
+  ],
+
+  testDir: './src/tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -25,7 +54,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    // baseURL: 'http://127.0.0.1:3000',
+    baseURL: 'https://app.intempt.com/',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
