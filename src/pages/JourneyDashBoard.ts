@@ -10,6 +10,7 @@ export default class JourneyDashboard {
     private readonly SenderEmail = "gerberalann@gmail.com";
     private readonly NewThreadRadioBtn = "//input[@role='radio' and @type='radio' and @value='new-thread']";
     private readonly SaveButton = "//button[contains(@class, 'v-btn') and .//p[contains(text(), 'Save')]]";
+    private readonly SendEmailBlockOnDashboard = "(//div[contains(@class, 'transformer')]//p[contains(text(), 'SEND EMAIL') and contains(@class, 'intempt-font-c1-caps')])[1]"
 
 
     constructor(private page: Page) { }
@@ -35,12 +36,15 @@ export default class JourneyDashboard {
         await this.page.getByText(this.SenderEmail).click();
         await this.page.locator(this.NewThreadRadioBtn).click();
         await this.page.locator(this.SaveButton).click();
+        console.log("Email block edited successfully");
         
     }
 
     async VerifySendEmailChanges() {
-        await this.page.locator(this.SendEmailBlock).dblclick();
+        await this.page.locator(this.SendEmailBlockOnDashboard).dblclick();
         await expect(this.page.getByText(this.EmailDestination)).toBeVisible();
+        console.log(this.EmailDestination + " email destination is selected");
         await expect(this.page.getByText(this.SenderEmail)).toBeVisible();
+        console.log(this.SenderEmail + " sender is selected");
     }
 }

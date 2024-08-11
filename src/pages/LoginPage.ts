@@ -1,5 +1,4 @@
 import { expect, Page } from '@playwright/test';
-import HomePage from './HomePage';
 
 export default class LoginPage {
     private readonly usernameField = "//input[@id='email1']"
@@ -29,9 +28,7 @@ export default class LoginPage {
 
     async clickLoginButton() {
         await this.page.locator(this.loginButton).click()
-
-        const homePage = new HomePage(this.page);
-        return HomePage;
+        console.log("Logged in successfully");
     }
 }
 

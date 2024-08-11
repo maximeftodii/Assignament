@@ -1,11 +1,11 @@
-import { test, devices  } from '@playwright/test';
+import { test } from '@playwright/test';
 import LoginPage from "../pages/LoginPage";
 import { decrypt,  } from "../utils/CryptojsUtils";
 import HomePage from '../pages/HomePage';
 import JourneyDashboard from '../pages/JourneyDashBoard';
 
-test("Login test", async ({page}) => {
-    page.setViewportSize({width: 2560, height: 1368});
+test("Edit Send Email block", async ({page}) => {
+    page.setViewportSize({width: 2560, height: 1300});
     const loginPage = new LoginPage(page);
     const homePage = new HomePage(page);
     const dashboardPage = new JourneyDashboard(page);
